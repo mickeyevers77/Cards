@@ -14,9 +14,9 @@ import UIKit
     /**
      Text of the title label.
      */
-    @IBInspectable public var title: String = "The Art of the Impossible" {
+    @IBInspectable public var title: String = "" {
         didSet{
-            titleLbl.text = title
+            titleLbl.text = title.uppercased()
         }
     }
     /**
@@ -29,6 +29,7 @@ import UIKit
     @IBInspectable public var subtitle: String = "Inside the extraordinary world of Monument Valley 2" {
         didSet{
             subtitleLbl.text = subtitle
+            layout()
         }
     }
     /**
@@ -74,17 +75,17 @@ import UIKit
         super.draw(rect)
         
         categoryLbl.text = category.uppercased()
-        categoryLbl.textColor = textColor.withAlphaComponent(0.3)
-        categoryLbl.font = UIFont.systemFont(ofSize: 100, weight: .bold)
-        categoryLbl.shadowColor = UIColor.black
-        categoryLbl.shadowOffset = CGSize.zero
+        categoryLbl.textColor = UIColor.white
+        categoryLbl.font = UIFont.systemFont(ofSize: 15, weight: .bold)
+       // categoryLbl.shadowColor = UIColor.black
+       // categoryLbl.shadowOffset = CGSize.zero
         categoryLbl.adjustsFontSizeToFitWidth = true
         categoryLbl.minimumScaleFactor = 0.1
-        categoryLbl.lineBreakMode = .byTruncatingTail
+        //categoryLbl.lineBreakMode = .byTruncatingTail
         categoryLbl.numberOfLines = 0
         
-        titleLbl.textColor = textColor
-        titleLbl.text = title
+        titleLbl.textColor = UIColor.white
+        titleLbl.text = title.uppercased()
         titleLbl.font = UIFont.systemFont(ofSize: titleSize, weight: .bold)
         titleLbl.adjustsFontSizeToFitWidth = true
         titleLbl.minimumScaleFactor = 0.1
@@ -93,10 +94,10 @@ import UIKit
         titleLbl.baselineAdjustment = .none
         
         subtitleLbl.text = subtitle
-        subtitleLbl.textColor = textColor
+        subtitleLbl.textColor = UIColor.white
         subtitleLbl.font = UIFont.systemFont(ofSize: subtitleSize, weight: .medium)
-        subtitleLbl.shadowColor = UIColor.black
-        subtitleLbl.shadowOffset = CGSize.zero
+      //  subtitleLbl.shadowColor = UIColor.black
+        //subtitleLbl.shadowOffset = CGSize.zero
         subtitleLbl.adjustsFontSizeToFitWidth = true
         subtitleLbl.minimumScaleFactor = 0.1
         subtitleLbl.lineBreakMode = .byTruncatingTail
@@ -111,21 +112,22 @@ import UIKit
         super.layout(animating: animating)
         
         let gimme  = LayoutHelper(rect: backgroundIV.bounds)
-        
-        categoryLbl.frame = CGRect(x: insets,
-                                   y: insets,
-                                   width: gimme.X(80),
-                                   height: gimme.Y(7))
-        
-        titleLbl.frame = CGRect(x: insets,
-                                y: gimme.Y(1, from: categoryLbl),
-                                width: gimme.X(80),
-                                height: gimme.Y(17))
-        
+
         subtitleLbl.frame = CGRect(x: insets,
                                    y: gimme.RevY(0, height: gimme.Y(14)) - insets,
                                    width: gimme.X(80),
                                    height: gimme.Y(14))
+
+        titleLbl.frame = CGRect(x: insets,
+                                y: gimme.RevY(0, height: gimme.Y(8)) - insets - subtitleLbl.frame.height,
+                                width: gimme.X(150),
+                                height: gimme.Y(17))
+
+        categoryLbl.frame = CGRect(x: insets,
+                                   y: gimme.RevY(0, height: gimme.Y(1)) - subtitleLbl.frame.height - titleLbl.frame.height,
+                                   width: gimme.X(150),
+                                   height: gimme.Y(7))
+
         titleLbl.sizeToFit()
     }
     
